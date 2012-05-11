@@ -27,15 +27,10 @@
         poll = setInterval(methods.isDomResized, attributes.pollInterval);
         if (tips.length < 1) {
           targets.each(function(i){
-
-
             var target, tip, id, content, classes;
 
             target = $(this);
             id = 'foundationTooltip' + i;
-
-            console.log(target)  ;
-              console.log(id)  ;
             content = target.attr('title');
             classes = target.attr('class');
             target.data('id', id);
@@ -87,7 +82,6 @@
     },
     reload : function() {
       var $self = $(this);
-        console.log($(this));
       return ($self.data('tooltips')) ? $self.tooltips('destroy').tooltips('init') : $self.tooltips('init');
     },
     destroy : function() {
@@ -100,7 +94,7 @@
        });
     },
     reposition : function(target, tip, classes) {
-      var width, nub, nubHeight, nubWidth, row, objPos, nubPos;
+      var width, nub, nubHeight, nubWidth, row, objPos;
 
       width = target.data('width');
       nub = tip.children('.nub');
@@ -117,7 +111,6 @@
         }).end();
       };
 
-       nubPos = objPos;
 
       objPos(tip, (target.offset().top + target.outerHeight() + 10), 'auto', 'auto', target.offset().left, width);
       objPos(nub, -nubHeight, 'auto', 'auto', 10);
@@ -125,7 +118,7 @@
       if ($(window).width() < 767) {
         row = target.parents('.row');
         tip.width(row.outerWidth() - 20).css('left', row.offset().left).addClass('tip-override');
-        nubPos(nub, -nubHeight, 'auto', 'auto', target.offset().left);
+        objPos(nub, -nubHeight, 'auto', 'auto', target.offset().left);
       } else {
         if (classes.indexOf('tip-top') > -1) {
           objPos(tip, (target.offset().top - tip.outerHeight() - nubHeight), 'auto', 'auto', target.offset().left, width)
@@ -134,11 +127,11 @@
         } else if (classes.indexOf('tip-left') > -1) {
           objPos(tip, (target.offset().top + (target.outerHeight() / 2) - nubHeight), 'auto', 'auto', (target.offset().left - tip.outerWidth() - 10), width)
           .removeClass('tip-override');
-          nubPos(nub, (tip.outerHeight() / 2) - (nubHeight / 2), -nubHeight, 'auto', 'auto');
+          objPos(nub, (tip.outerHeight() / 2) - (nubHeight / 2), -nubHeight, 'auto', 'auto');
         } else if (classes.indexOf('tip-right') > -1) {
           objPos(tip, (target.offset().top + (target.outerHeight() / 2) - nubHeight), 'auto', 'auto', (target.offset().left + target.outerWidth() + 10), width)
           .removeClass('tip-override');
-          nubPos(nub, (tip.outerHeight() / 2) - (nubHeight / 2), 'auto', 'auto', -nubHeight);
+          objPos(nub, (tip.outerHeight() / 2) - (nubHeight / 2), 'auto', 'auto', -nubHeight);
         }
       }
     },
